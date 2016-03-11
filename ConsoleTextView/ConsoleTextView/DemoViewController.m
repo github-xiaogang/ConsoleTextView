@@ -7,8 +7,12 @@
 //
 
 #import "DemoViewController.h"
+#import "ConsoleTextView.h"
 
 @interface DemoViewController ()
+
+@property (weak, nonatomic) IBOutlet ConsoleTextView *textView;
+@property (nonatomic, strong) NSTimer * timer;
 
 @end
 
@@ -16,22 +20,36 @@
 
 - (void)viewDidLoad {
     [super viewDidLoad];
-    // Do any additional setup after loading the view from its nib.
+    self.textView.scrollDirection = CTVScrollDirectionDown;
+    [self startLoggerTest];
+}
+
+- (void)startLoggerTest
+{
+    self.timer = [NSTimer scheduledTimerWithTimeInterval:1.0 target:self selector:@selector(logSomething) userInfo:nil repeats:YES];
+}
+
+- (void)logSomething
+{
+    NSString * randomText = [NSString stringWithFormat:@"random text %@",[NSDate date]];
+    [self.textView log:randomText];
+}
+
+- (void)viewDidDisappear:(BOOL)animated
+{
+    [super viewDidDisappear:animated];
+    [self.timer invalidate];
+    self.timer = nil;
 }
 
 - (void)didReceiveMemoryWarning {
     [super didReceiveMemoryWarning];
-    // Dispose of any resources that can be recreated.
 }
 
-/*
-#pragma mark - Navigation
-
-// In a storyboard-based application, you will often want to do a little preparation before navigation
-- (void)prepareForSegue:(UIStoryboardSegue *)segue sender:(id)sender {
-    // Get the new view controller using [segue destinationViewController].
-    // Pass the selected object to the new view controller.
+- (void)dealloc
+{
+    NSLog(@"dealloced ");
 }
-*/
+
 
 @end

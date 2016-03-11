@@ -20,7 +20,8 @@
     // Override point for customization after application launch.
     UIWindow * window = [[UIWindow alloc] initWithFrame:[UIScreen mainScreen].bounds];
     DemoViewController * demoVC = [[DemoViewController alloc] init];
-    window.rootViewController = demoVC;
+    UINavigationController * demoNVC = [[UINavigationController alloc] initWithRootViewController:demoVC];
+    window.rootViewController = demoNVC;
     self.window = window;
     [self.window makeKeyAndVisible];
     return YES;
